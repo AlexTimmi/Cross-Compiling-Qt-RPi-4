@@ -1,6 +1,14 @@
 # Cross-Compiling Qt for Raspberry Pi 4
-This guide documents the steps to corss-compile Qt 5.15.2 for the Raspberry Pi 4B.
+This guide documents the steps to corss-compile Qt 5.15.2 for the Raspberry Pi 4.
 
+## Acknowledgments
+
+Used the following guides for reference:
+
+* https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/
+* https://www.tal.org/tutorials/building-qt-515-lts-raspberry-pi-raspberry-pi-os
+* https://stackoverflow.com/questions/68081481/how-can-i-build-qt-5-13-2-with-gcc-11-1-on-windows
+* https://github.com/UvinduW/Cross-Compiling-Qt-for-Raspberry-Pi-4
 
 ## Configure the Raspberry Pi
 For our build we need to have SSH and GL (FAKE KMS) enabled. These can both be done through the `raspi-config` utility.  
