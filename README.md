@@ -10,6 +10,7 @@ On the Raspberry Pi terminal:
 	sudo raspi-config
 	
 A menu should pop up on your terminal
+<img src="img/raspi-config.png" />
 
 ### Enable SSH
 
@@ -28,6 +29,8 @@ That should enable KMS. If you are using a minimal build, you may be prompted to
 Uncomment the following line by removing the `#` character:
 
 	deb-src http://raspbian.raspberrypi.org/raspbian/ bullseye main contrib non-free rpi
+
+<img src="img/deb-src.png" />
 	
 ### Update the system
 
