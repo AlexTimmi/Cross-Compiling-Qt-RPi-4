@@ -115,12 +115,26 @@ Make it executable and run:
     sudo chmod +x sysroot-relativelinks.py
     ./sysroot-relativelinks.py sysroot
 
-### Download the Qt sources. We will use LTS version 5.15.2
+### Download the Qt sources
+
+Use LTS version 5.15.2
 
     git clone git://code.qt.io/qt/qtbase.git -b 5.15.2
     cd qtbase
 
-### Perform configuration before make.
+### Fix includ header
+
+Since with GCC 11 some header dependencies have changed and Qt 5.15.2 does not always include the right headers.
+
+Add the line `#include <limits>` within the `#ifdef __cplusplus` block to the file *src/corelib/global/qglobal.h*
+
+Edit:
+
+    nano src/corelib/global/qglobal.h
+
+<img src="img/qt-fix-include.png" />
+
+### Perform configuration
 For Raspberry Pi 4, the -device argument will be linux-rasp-pi4-v3d-g++
 
     ./configure -release -opengl es2 -eglfs -device linux-rasp-pi4-v3d-g++ -device-option CROSS_COMPILE=~/raspberrypi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf- -sysroot ~/raspberrypi/sysroot -prefix /usr/local/qt -extprefix ~/raspberrypi/qt -hostprefix ~/raspberrypi/host-qt -opensource -confirm-license -skip qtscript -skip qtwayland -skip qtwebengine -nomake tests -make libs -pkg-config -no-use-gold-linker -v -recheck
@@ -134,7 +148,7 @@ In case of a failed configuration or build, do not forget to perform a full clea
     git clean -dfx
 
 
-### Build
+### Make & install
 
     make -j8
     make install
