@@ -140,6 +140,75 @@ In case of a failed configuration or build, do not forget to perform a full clea
     make install
 
 ### Deploying built Qt on Raspberry Pi
+[change *rpi.lan* with the IP address or hostname for your RPi]
 
     cd ~/raspberrypi
-    rsync -avz qt pi@192.168.0.101:/usr/local
+    rsync -avz qt pi@rpi.lan:/usr/local
+
+
+## Qt Creator for Raspberry Pi
+
+### Install
+
+    sudo apt install qtcreator
+
+### Adding a device to Qt Creator
+
+Go to the *Tools - Options* menu, open the *Devices* section and add the *Generic Linux Device*:
+
+<img src="img/qt-device.png" />
+
+Here we set the device name, ip address or hostname and username. In addition, specify a private SSH key for accessing the Raspberry Pi via SSH.
+
+### Add compilers to Qt Creator
+
+Go to the *Kits* section on the *Compilers* tab and add compilers for C and C ++
+
+Compiler paths:
+
+C:
+
+    ~/raspberrypi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
+
+C++:
+
+    ~/raspberrypi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
+
+<img src="img/qt-compiler-c.png" />
+<img src="img/qt-compiler-c++.png" />
+
+### Add a debugger to Qt Creator
+
+Pre-install:
+
+    sudo apt-get install gdb-multiarch
+
+In the same section, on the *Debuggers* tab, add a debugger to work with Raspberry
+
+Path:
+
+    /usr/bin/gdb-multiarch
+
+<img src="img/qt-debugger.png" />
+
+### Add version to Qt Creator
+
+Qt Versions tab
+
+qmake path:
+
+    ~/raspberrypi/host-qt/bin/qmake
+
+<img src="img/qt-version.png" />
+
+### Add kit to Qt Creator
+
+Kits tab
+
+Sysroot:
+
+    ~/raspberrypi/sysroot
+
+<img src="img/qt-kit.png" />
+
+When creating a new project, the created kit, which name *Raspberry Pi*, will be available.
