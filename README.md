@@ -58,7 +58,7 @@ Uncomment the following line by removing the `#` character:
 
     sudo apt-get update
     sudo apt-get upgrade
-    sudo apt-get install gcc git bison python gperf pkg-config gdb-multiarch
+    sudo apt-get install gcc git bison python3 gperf pkg-config gdb-multiarch
     sudo apt install build-essential
 
 ### Set up SSH keys to speed up connecting with the Raspberry Pi
@@ -106,7 +106,7 @@ This means that the keys are already present in the system. In this case, the ge
 ### Fix symbolic links
 The files we copied in the previous step still have symbolic links pointing to the file system on the Raspberry Pi. We need to alter this so that they become relative links from the new sysroot directory on the host machine. We can do this with a downloadable python script. To download it, enter the following:
 
-    wget https://raw.githubusercontent.com/riscv/riscv-poky/master/scripts/sysroot-relativelinks.py
+    wget https://raw.githubusercontent.com/AlexTimmi/Cross-Compiling-Qt-RPi-4/main/scripts/sysroot-relativelinks.py
 
 Once it is downloaded, you just need to make it executable and run it, using the following commands:
 
