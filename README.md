@@ -104,12 +104,42 @@ This means that the keys are already present in the system. In this case, the ge
     rsync -avz pi@rpi.lan:/opt sysroot/opt
 
 ### Fix symbolic links
-The files we copied in the previous step still have symbolic links pointing to the file system on the Raspberry Pi. We need to alter this so that they become relative links from the new sysroot directory on the host machine. We can do this with a downloadable python script. To download it, enter the following:
+The files we copied in the previous step still have symbolic links pointing to the file system on the Raspberry Pi. We need to alter this so that they become relative links from the new sysroot directory on the host machine. We can do this with a downloadable python script.
+
+To download it:
 
     wget https://raw.githubusercontent.com/AlexTimmi/Cross-Compiling-Qt-RPi-4/main/scripts/sysroot-relativelinks.py
 
-Once it is downloaded, you just need to make it executable and run it, using the following commands:
+Make it executable and run:
 
     sudo chmod +x sysroot-relativelinks.py
     ./sysroot-relativelinks.py sysroot
 
+### Download the Qt sources. We will use LTS version 5.15.2
+
+    git clone git://code.qt.io/qt/qtbase.git -b 5.15.2
+    cd qtbase
+
+### Perform configuration before make.
+For Raspberry Pi 4, the -device argument will be linux-rasp-pi4-v3d-g++
+
+    ./configure -release -opengl es2 -eglfs -device linux-rasp-pi4-v3d-g++ -device-option CROSS_COMPILE=~/raspberrypi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf- -sysroot ~/raspberrypi/sysroot -prefix /usr/local/qt -extprefix ~/raspberrypi/qt -hostprefix ~/raspberrypi/host-qt -opensource -confirm-license -skip qtscript -skip qtwayland -skip qtwebengine -nomake tests -make libs -pkg-config -no-use-gold-linker -v -recheck
+
+Upon successful completion of this step, the following items should be activated in the console:
+    
+<img src="img/config-res.png" />
+
+In case of a failed configuration or build, do not forget to perform a full cleanup before trying again:
+
+    git clean -dfx
+
+
+### Build
+
+    make -j8
+    make install
+
+### Deploying built Qt on Raspberry Pi
+
+    cd ~/raspberrypi
+    rsync -avz qt pi@192.168.0.101:/usr/local
