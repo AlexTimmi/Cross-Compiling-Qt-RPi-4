@@ -213,7 +213,7 @@ For Raspberry Pi 4, the -device argument will be linux-rasp-pi4-v3d-g++
 -release \
 -opengl es2 -eglfs \
 -device linux-rasp-pi4-v3d-g++ \
--no-feature-eglfs_brcm
+-no-feature-eglfs_brcm \
 -device-option CROSS_COMPILE=~/raspberrypi/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf- \
 -sysroot ~/raspberrypi/sysroot \
 -prefix /usr/local/qt \
