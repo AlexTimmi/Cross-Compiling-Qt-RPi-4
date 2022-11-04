@@ -67,7 +67,7 @@ sudo apt build-dep qt5-qmake libqt5gui5 libqt5webengine-data libqt5webkit5
 ### Install the required development packages
 
 ```sh
-sudo apt install libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 gdbserver pkg-config mesa-utils libgles2-mesa-dev libdrm.dev libgbm.dev
+sudo apt install libudev-dev libinput-dev libts-dev libxcb-xinerama0-dev libxcb-xinerama0 gdbserver pkg-config mesa-utils libgles2-mesa-dev libdrm-dev libgbm-dev
 ```
 
 
