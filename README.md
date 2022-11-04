@@ -88,6 +88,14 @@ sudo apt install libbluetooth-dev
 # gstreamer (multimedia) packages
 sudo apt install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 sudo apt install libgstreamer1.0-dev  libgstreamer-plugins-base1.0-dev
+# databases packages
+sudo apt install libpq-dev libmariadb-dev
+# QtWebEngine packages
+sudo apt install flex bison gperf libre2-dev libnss3-dev libdrm-dev
+sudo apt install libxml2-dev libxslt1-dev libminizip-dev libjsoncpp-dev liblcms2-dev libevent-dev libprotobuf-dev protobuf-compiler
+sudo apt install libopus-dev libvpx-dev
+# wayland packages
+sudo apt install libwayland-dev
 ```
 
 ### Create a directory for the Qt install
@@ -102,11 +110,19 @@ sudo chown pi:pi /usr/local/qt
 
 ### Update the PC and install the required development packages
 
+Ubuntu:
 ```sh
 sudo apt update
 sudo apt upgrade
 sudo apt install build-essential libfontconfig1 mesa-common-dev libglu1-mesa-dev
 sudo apt install git bison gperf python3 pkg-config gdb-multiarch
+```
+Fedora:
+```sh
+sudo dnf update
+sudo yum groupinstall "C Development Tools and Libraries"
+sudo yum install mesa-libGL-devel
+sudo dnf install git flex bison gperf python3 pkg-config gdb-multiarch
 ```
 
 ### Set up SSH keys to speed up connecting with the Raspberry Pi
@@ -145,6 +161,21 @@ mkdir ~/raspberrypi
 cd ~/raspberrypi
 wget https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
 tar xf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
+```
+
+### For Fedora install GDB
+
+```sh
+sudo dnf install texinfo python3-devel ncurses ncurses-devel expat expat-devel gmp-devel mpfr-devel libmpc-devel autoconf zlib-devel
+wget https://ftp.gnu.org/gnu/gdb/gdb-12.1.tar.gz
+tar xf gdb-12.1.tar.gz
+cd gdb-12.1
+./configure --prefix=/opt/arm/gdb --with-expat --with-python --target=arm-none-eabi --enable-multilib --enable-interwork --disable-nls --disable-ibssp
+make all -j$(nproc)
+sudo make install
+# Check GDB
+/opt/arm/gdb/bin/arm-none-eabi-gdb --version
+cd ..
 ```
 
 ### Creating a sysroot for cross-compiling under Raspberry Pi
@@ -206,7 +237,14 @@ nano src/corelib/global/qglobal.h
 
 For Raspberry Pi 4, the -device argument will be linux-rasp-pi4-v3d-g++
 
-**Note:** *Under Bullseye, make sure to add the option: -no-feature-eglfs_brcm so that brcm libraries are not used*
+**Note:** *Under Bullseye, make sure to add the option: -no-feature-eglfs_brcm so that brcm libraries are not used.*
+
+**Note:** *Building the qtwebengine module takes a lot of time and space, the default configure example above disables it with -skip qtwebengine.*
+
+**Fedora** install missing a dependency:
+```sh
+sudo dnf install 'perl(English)'
+```
 
 ```sh
 ./configure \
@@ -220,7 +258,6 @@ For Raspberry Pi 4, the -device argument will be linux-rasp-pi4-v3d-g++
 -extprefix ~/raspberrypi/qt \
 -hostprefix ~/raspberrypi/host-qt \
 -opensource -confirm-license \
--skip qtscript \
 -skip qtwayland \
 -skip qtwebengine \
 -ssl \
@@ -278,8 +315,13 @@ rsync -avz qt pi@rpi.lan:/usr/local
 
 ### Install
 
+Ubuntu:
 ```sh
 sudo apt install qtcreator
+```
+Fedora:
+```sh
+sudo dnf install qt-creator
 ```
 
 ### Adding a device to Qt Creator
@@ -314,8 +356,14 @@ C++:
 In the same section, on the *Debuggers* tab, add a debugger to work with Raspberry
 
 Path:
+
+Ubuntu:
 ```
 /usr/bin/gdb-multiarch
+```
+Fedora:
+```
+/opt/arm/gdb/bin/arm-none-eabi-gdb
 ```
 
 <img src="img/qt-debugger.png" />
