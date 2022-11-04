@@ -234,9 +234,24 @@ For Raspberry Pi 4, the -device argument will be linux-rasp-pi4-v3d-g++
 ```
 
 Upon successful completion of this step, the following items should be activated in the console:
-    
-<img src="img/config-res.png" />
 
+```sh
+  EGLFS .................................. yes
+  EGLFS details:
+    EGLFS OpenWFD ........................ no
+    EGLFS i.Mx6 .......................... no
+    EGLFS i.Mx6 Wayland .................. no
+    EGLFS RCAR ........................... no
+    EGLFS EGLDevice ...................... yes
+    EGLFS GBM ............................ yes
+    EGLFS VSP2 ........................... no
+    EGLFS Mali ........................... no
+    EGLFS Raspberry Pi ................... no
+    EGLFS X11 ............................ yes
+  LinuxFB ................................ yes
+  VNC .................................... yes
+```
+    
 In case of a failed configuration or build, do not forget to perform a full cleanup before trying again:
 
 ```sh
