@@ -311,12 +311,6 @@ C++:
 
 ### Add a debugger to Qt Creator
 
-Pre-install:
-
-```sh
-sudo apt install gdb-multiarch
-```
-
 In the same section, on the *Debuggers* tab, add a debugger to work with Raspberry
 
 Path:
