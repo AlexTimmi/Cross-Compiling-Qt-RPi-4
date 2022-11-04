@@ -163,7 +163,7 @@ wget https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linu
 tar xf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
 ```
 
-### For Fedora install GDB
+### Fedora install GDB
 
 ```sh
 sudo dnf install texinfo python3-devel ncurses ncurses-devel expat expat-devel gmp-devel mpfr-devel libmpc-devel autoconf zlib-devel
@@ -173,9 +173,9 @@ cd gdb-12.1
 ./configure --prefix=/opt/arm/gdb --with-expat --with-python --target=arm-none-eabi --enable-multilib --enable-interwork --disable-nls --disable-ibssp
 make all -j$(nproc)
 sudo make install
+cd ..
 # Check GDB
 /opt/arm/gdb/bin/arm-none-eabi-gdb --version
-cd ..
 ```
 
 ### Creating a sysroot for cross-compiling under Raspberry Pi
