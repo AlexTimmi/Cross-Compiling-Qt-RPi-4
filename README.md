@@ -122,7 +122,7 @@ Fedora:
 sudo dnf update
 sudo yum groupinstall "C Development Tools and Libraries"
 sudo yum install mesa-libGL-devel
-sudo dnf install git flex bison gperf python3 pkg-config gdb-multiarch
+sudo dnf install git flex bison gperf python3 pkg-config
 ```
 
 ### Set up SSH keys to speed up connecting with the Raspberry Pi
